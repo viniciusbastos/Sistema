@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="br">
+
+<head>
+    <title>Cadastro de coordenadas geográficas dos postos de serviço PM/BM do carnaval de Salvador</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="generator" content="Geany 0.16" />
+    <style type="text/css">
+        body {
+            font-family: Verdana, Geneva, sans-serif;
+            font-size: 10pt;
+        }
+        .negrito {
+            font-weight: bold;
+            color: #F00;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<h3>Instruções</h3>
+<p>1. Informe o CEP do posto, disponível no <a href="http://homologa.operacoes.pm.ba.gov.br/index.php?option=com_content&amp;view=article&amp;id=583:postos-do-carnaval-2015&amp;catid=206:dmt&amp;Itemid=257" target="_blank">Portal de Operações</a> e clique no botão pegar coordenadas.</p>
+<p>2. Observe a marcação no mapa e reposicione o ponteiro para o local correspondente ao do posto de Serviço.</p>
+<p>3. Informe o nome do posto e clique no botão enviar.</p>
+<p>&nbsp;</p>
+<fieldset>
+    <form enctype="multipart/form-data" action="" method="POST" name="form1">
+
+
+        <p>
+        <td><label for="endereco" class="required">Digite aqui o CEP da rua do seu posto de serviço (consulte no Portal de Operações):</label>
+            <input name="endereco" id="endereco" class="text" type="text">			</p>    </td>
+        <p>
+            <input class="btn btn-large" id="btn-get-coordinates" value="Pegar Coordenadas" type="button">
+        </p>
+
+        </div>
+        <div class="span9">
+            <div class="form-inline">
+                <label for="latitude">Latitude</label><input name="latitude" id="latitude" class="input-xlarge" placeholder="Latitude" type="text">
+                <label for="longitude">Longitude</label><input name="longitude" id="longitude"  class="input-xlarge" placeholder="Longitude" type="text">
+
+
+                </p>
+
+                <p>
+                    <span class="negrito">Importante :</span> após surgir o mapa, arraste o apontador até o local exato do seu posto de serviço. </p>
+                <div id="map-canvas" class="col50 f-right">
+                    <div align="center" id="map" style="width: 100%; height:300px;"></div>
+                </div><!-- /map-canvas -->
+            </div>
+
+
+
+            <td>
+                <label>Nome do posto de serviço:
+                </label>
+            </td>
+            <td>
+                <input type="text" name="nome" value="" onKeyPress="return teclaPress()"><br>
+            </td>
+
+            </tr><!-- Fim Linha Nome do Responsavel -->
+
+
+
+            <td>
+
+                <tr> <!-- Inicio Linha E-mail-->
+                    <!--<td>
+                        <label>E-mail:
+                        </label>
+                              </td>
+                    <td>
+                        <input type="text" size="80" name="email" id="email"  value="" onKeyPress="return teclaPress();"><br>
+                    </td>
+                    -->
+                </tr><!-- Fim Linha E-mail -->
+
+
+                <!--
+                                        <label>OPM/OBM:
+                                    </label>
+                                          </td>
+                                <td>
+                                    <input type="text" size="40" name="opm" id="opm"  value="" onKeyPress="return teclaPress();"><br>
+                                </td>
+
+                    -->
+
+
+
+                <input name="Enviar" type="submit" OnClick="check();" value="Enviar">
+    </form>
+
+</fieldset>
+<script	type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script	type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript">
+    var geocoder;
+    var map;
+    var infowindow = new google.maps.InfoWindow();
+    var marker;
+
+    $(document).ready(function(){
+        //Show maps admin
+        $('#btn-get-coordinates').live('click',function(){
+            adminMapsCoordinates();
+        });
+        if( $('#latitude').val() && $('#longitude').val() ){
+            adminMapsCoordinates();
+        }
+
+
+        //Prevent from submit on press ENTER
+        $('#form-cadastro-empreendimento').keypress(function (e) {
+            if(e.which == 13 && e.target.nodeName != "TEXTAREA"){
+                adminGetAddressToCoordinates();
+                return false;
+            }
+        });
+
+    });
+
+
+
+    /**
+     * Admin Maps Coordinates
+     * @desc Gerencia a exibição do mapa no Insert de Imoveis.
+     */
+    function adminMapsCoordinates() {
+
+        //Exibe as coordenadas e o mapa.
+        $('#map').fadeIn();
+
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(40.730885,-73.997383);
+        var mapOptions = {
+            scrollwheel: true,
+            zoom: 15,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        adminGetAddressToCoordinates();
+        return false;
+    }
+
+
+
+
+    /**
+     * Admin Get Address To Coordinates
+     * @desc Pega a string de endereco e gera o pointer no mapa.
+     */
+    function adminGetAddressToCoordinates() {
+        // var address = document.getElementById("address").value;
+        var endereco = new Array();
+        endereco[1] = $('#endereco').val();
+        endereco[2] = $('#cidade').val();
+        endereco[3] = $('#bairro').val();
+        endereco[4] = $('#estado').val();
+        endereco[5] = ' - Brasil';
+
+        var address = endereco.join(' ');
+        geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+
+                //Passo os valores para o form.
+                updateCoordinatesValues(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+                marker = new google.maps.Marker({
+                    draggable: true,
+                    map: map,
+                    position: results[0].geometry.location
+
+                });
+
+                //Se rua, bairro e cidade estiverem vazios o zom mostra o brasil.
+                if(endereco[1] == '' && endereco[2] == '' && endereco[3] == '')
+                    map.setZoom(4);
+                else
+                    map.setZoom(15);
+
+                //DRAG AND DROP
+                google.maps.event.addListener(marker, "dragend", function(event) {
+                    var point = marker.getPosition();
+                    window.setTimeout(function(){
+                        map.panTo(point);
+                        updateCoordinatesValues(point.lat(), point.lng());
+
+                    }, 100);
+                });
+            } else {
+
+                showFeedback('#maps-feedback', 'Localização não encontrada.');
+                $('#map').fadeOut();
+                updateCoordinatesValues('','');
+
+            }
+        });
+    }
+
+
+    /**
+     * Update CoordinatesValues
+     * @desc Atualiza o valor das coordenadas.
+     * @param lat String com o valor de Latitude.
+     * @param long String com o valor de Longitude.
+     */
+    function updateCoordinatesValues(lat, lng)
+    {
+        $('#latitude').val(lat);
+        $('#longitude').val(lng);
+        return;
+    }
+
+    /**
+     * Show Feedback
+     * @desc Exibe mensagens de feedback.
+     * @param element Seletor jQuery para o elemento onde sera mostrada a mensagem.
+     * @param message Texto da mensagem a ser exibida.
+     */
+    function showFeedback(element, message)
+    {
+        if ( $(element).is(':visible'))
+            $(element).text(message);
+        else
+            $(element).text(message).fadeOut().fadeIn();
+
+        return;
+
+    }
+
+
+
+
+
+
+</script>
+
+
+<script language="javascript">
+
+    function verifica(){
+        if(document.form1.nome.value==""){
+            alert("Erro! O Campo \"Nome do informate\" está em branco!");
+            document.form1.nome.focus();
+            return false;
+        }
+// if(document.form1.opm.value==""){
+// alert("Erro! O Campo \"OPM\" está em branco!");
+//document.form1.sobrenome.focus();
+// return false;
+// }
+
+        if(document.form1.file.value==""){
+            alert("Erro! Favor selecionar uma foto!");
+            document.form1.sobrenome.focus();
+            return false;
+        }
+
+//Verificando se a combo do estado tem valor selecionado
+// if(document.form1.email.value==""){
+// alert("Erro! Informar o e-mail!");
+// document.form1.estado.focus();
+// return false;
+//}
+        return true;
+    }
+    //Função check analiza a função verifica e envia o formulário ou para o processo
+    function check(){
+        if(verifica())
+            document.form1.submit();
+    }
+    //função teclaPress valida os campos caso o usuário
+    //Precione enter em um dos dois edits em vez de clicar no botão
+    function teclaPress(){
+        var tecla=event.keyCode;
+        if(tecla===13){
+            if(verifica())
+                return true;
+            else
+                return false;
+        }
+        else
+            return tecla;
+    }
+</script>
+
+
+
+</body>
+</html>
+
+
+l>

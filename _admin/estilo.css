@@ -1,0 +1,46 @@
+form {
+    width: 220px;
+    margin: 200px auto;
+    border: 2px solid #cccccc;
+}
+fieldset{
+    border: 0px;
+    padding: 0 15px 10px 15px;
+}
+legend{
+    font: 14pt Tahoma, sans-serif;
+    color: #069;
+    font-weight: bold;
+    padding: 10px 0;
+}
+label{
+    display: block;
+    font: 16px;
+    color:#069;
+    padding: 3px 0px;
+}
+span{
+    display: block;
+    font:16px;
+    color: #069;
+}
+input{
+    padding: 3px;
+    width: 180px;
+    border: 1px solid #069;
+    font: 16px tahoma, geneva, sans-serif;
+    font-weight: bold;
+
+}
+input#logar{
+    width: 120px;
+    display: block;
+    color: #ffffff;
+    margin: 10px auto;
+    cursor: pointer;
+    background: #069;
+
+
+    
+
+}

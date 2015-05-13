@@ -1,0 +1,256 @@
+
+P{
+    text-align: justify;
+    color: #000000;
+}
+p#nome{
+    margin-top: 50px;
+    margin-bottom: 40px;
+
+
+
+}
+p#local{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    height: 27px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 30px;
+    position: absolute;
+    text-align: center;
+    top: 238px;
+}
+p#hri{
+     border: 1px solid #000000;
+     color: #000000;
+     width: 320px;
+     height: 20px;
+     margin-top: 2px;
+     margin-bottom: 2px;
+     left: 30px;
+     position: absolute;
+     text-align: center;
+     top: 279px;
+ }
+p#hrf{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 350px;
+    position: absolute;
+    text-align: center;
+    top: 279px;
+}
+p#numero{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    height: 20px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 30px;
+    position: absolute;
+    text-align: center;
+    top: 210px;
+}
+p#soli{
+    border: 1px solid #000000;
+    color: #000000;
+}
+p#Soli{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    height: 20px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 350px;
+    position: absolute;
+    text-align: center;
+    top: 210px;
+}
+p#data{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    height: 27px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 350px;
+    position: absolute;
+    text-align: center;
+    top: 238px;
+}
+p#uni{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 30px;
+    position: absolute;
+    text-align: center;
+    top: 300px;
+}
+p#arm{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 350px;
+    position: absolute;
+    text-align: center;
+    top: 300px;
+}
+p#modalidade{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 30px;
+    position: absolute;
+    text-align: center;
+    top: 325px;
+}
+p#processo {
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 350px;
+    position: absolute;
+    text-align: center;
+    top: 325px;
+}
+/**p#bairro, p#hri, p#hrf, p#uni, p#arm, p#modalidade, p#processo{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 200px;
+    margin-top: 2px;
+    margin-bottom: 2px;}*/
+
+p#vtr {
+    font-size: 25pt;
+    border: 1px solid #000000;
+    color: #000000;
+    width: 320px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 220px;
+    position: absolute;
+    text-align: center;
+    top: 425px;
+    font-weight: bold;
+
+}
+
+p#rodape{
+    color: #000000;
+    text-align: center;
+    position: absolute;
+    top: 23cm;
+    position: absolute;
+    left: 20px;
+}
+p#otr{
+    border: 1px solid #000000;
+    color: #000000;
+    width: 640px;
+    height: 60px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    left: 30px;
+    position: absolute;
+    text-align: justify;
+    top: 345px;
+    margin-top: 10px;
+}
+h1, h2{
+    font-size: 12pt;
+    text-align: center;
+
+
+}
+img#65{
+    height: 20px;
+    width: 30px;
+    position: absolute;
+    left: 100px;
+}
+div{
+    max-width: 21cm;
+    min-height: 20cm;
+}
+p#nome{
+    color: #000000;
+    text-align: center;
+    font-size: 16pt;
+}
+p#assinatura{
+    text-align: center;
+    color: #000000;
+    position: absolute;
+    top: 20cm;
+    left: 5cm;
+}
+form{
+    font-family: verdana, helvetica ;
+    font-size: 15px;
+    background-color: rgba(0,0,0,0.4);
+    max-width: 760px;
+    min-height: 550px;
+    margin-top: 20px;
+}
+textarea {
+    position: absolute;
+    left: 430px;
+    width: 400px;
+    height: 200;
+    padding: 10px;
+    color: black;
+    margin-left: 20px;
+
+}
+input{
+    position: absolute;
+    left: 430px;
+    width: 200px;
+    height: 0px;
+    padding: 10px;
+    color: black;
+    margin-left: 0px;
+    margin-bottom: 40px;
+
+}
+
+
+ select{
+     position: absolute;
+     left: 430px;
+ }
+ p{
+     margin-left: 10px;
+     margin-top: 20px;
+     color: #ffffff;
+ }
+ input#botao{
+     position: absolute;
+     left: 850px;
+     width: 150px;
+     height: 150px;
+     margin-top: 45px;
+     margin-bottom: 10px;
+ }
+ footer{
+     color: #000000 ;
+
+
+ }
+
