@@ -3,34 +3,15 @@
 
 include "teste.php";
 //criaçao de tabela mysql
-$id = $_POST["id"];
-$acao = $_POST["acao"];
-$form = $_POST["form"];
+$id         = $_POST["id"];
+$acao       = $_POST["acao"];
+$tipoarm    = $_POST["tipoarma"];
+$calibre    = $_POST["calibre"];
+$gu         = $_POST["gu"];
+$marca      = $_POST["marca"];
+$num        = $_POST["num"];
 
 
-$ident = $_POST["ident"];
-$servico = $_POST["serv"] ;
-$tipo = $_POST["tipo"];
-$bairro = $_POST["bairro"];
-$resumo = $_POST["resumo"];
-$data = $_POST["data"];
-$horario = $_POST["hr"];
-$local = $_POST["local"];
-$latitude = $_POST["latitude"];
-$longitude = $_POST["longitude"];
-$tipoarm = $_POST["tipoarma"];
-$calibre = $_POST["calibre"];
-$gu = $_POST["gu"];
-
-
-
-echo $servico;
-echo $tipo;
-echo $id;
-echo $acao;
-echo $resumo;
-echo $longitude;
-echo $latitude;
 
 if($acao == "Consultar") {
 
@@ -64,13 +45,11 @@ if($acao == "Excluir") {
 
 if($acao == "Inserir") {
 
-    $sql = "INSERT INTO `ocorrencias`(`id`, `Servico`, `Tipo`, `Bairro`, `Resumo`,`Data`, `horario`, `Local`,`Latitude`, `Longitude`) VALUES ($ident, $servico ,'$tipo', '$bairro','$resumo','$data', '$horario', '$local','$latitude', '$longitude')";
-    mysql_query($sql) or die ("nao foi possivel inserir os dados");
-    if($form == "arma") {
-        $sql2 = "INSERT INTO `65cipm`.`arma` (`ident`, `tipoarma`, `calibre`, `guresp`) VALUES ($ident, '$tipoarm', '$calibre', '$gu')";
-        mysql_query($sql2) or die ("nao foi possivel inserir na tabela armas os dados");
-    }
+
+        $sql2 = "INSERT INTO `65cipm`.`arma` (`id_Serv`, `tipoarma`, `Numeração`, `Marca`, `calibre`, `guresp`) VALUES ($id, '$tipoarm','$num','$marca', '$calibre', '$gu')";
+        mysql_query($sql2) or die (mysql_error($link));
+
     echo "Dados inseridos com sucesso!";
 }
-echo "<script type = 'text/JavaScript'> location.href ='index.php.php'</script> "
+echo "<script type = 'text/JavaScript'> location.href ='index.php?link=12'</script> "
 ?>

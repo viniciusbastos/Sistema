@@ -1,29 +1,20 @@
-<?php
-include 'teste.php';
+<?php 
+include "teste.php";
+include "banco-usuario.php";
+include "logica-usuario.php";
 
-$login=$_POST['login'];	//Pegando dados passados por AJAX
-$senha=$_POST['senha'];
+$usuario = buscaUsuario($con, $_POST['email'], $_POST['senha']);
 
-//Consulta no banco de dados
-
-$sql="select * from usuarios where email=  '$login' and senha= '$senha' ";
-
-$resultados = mysql_query($sql)or die (mysql_error());
-
-
-$res=mysql_fetch_array($resultados); //
-if (@mysql_num_rows($resultados) == 0){
-    echo 0;	//Se a consulta não retornar nada é porque as credenciais estão erradas
+if ($usuario == null){
+	$_SESSION["danger"] = "Usuário ou senha inválida.";
+	header("Location:index.php");
+	
 }
-
 else{
-    echo 1;	//Responde sucesso
-    if(!isset($_SESSION)) 	//verifica se há sessão aberta
-        session_start();		//Inicia seção
-    //Abrindo seções
-    $_SESSION['usuarioID']=$res['id'];
-    $_SESSION['nomeUsuario']=$res['nome'];
-    $_SESSION['email']=$res['email'];
-    exit;
+	$_SESSION["success"] = "Usuário conectado com sucesso.";
+	logaUsuario($usuario["email"]);
+	header("Location:index.php");
+	
 }
+die()
 ?>

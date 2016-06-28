@@ -1,14 +1,5 @@
-
-
 <?php
-$server = 'localhost';
-$user = 'root';
-$password = 'root';
-$db = '65cipm';
-
-$link = mysql_connect($server,$user,$password);
-$db_selected = mysql_select_db($db, $link);
-
+include "teste.php";
 
 function parseToXML($htmlStr) 
 { 
@@ -21,8 +12,6 @@ return $xmlStr;
 } 
 
 $query = "SELECT * FROM `ocorrencias` WHERE 1";
-
-
 $result = mysql_query($query);
 if (!$result) {
   die('Invalid query: ' . mysql_error());

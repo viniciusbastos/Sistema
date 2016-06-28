@@ -1,20 +1,18 @@
 <?php
 
-$server = 'localhost';
+$username = 'root';
 $password = 'root';
-$db = '65cipm';
-$host = 'localhost';
-$port = 3306;
+$database=  '65cipm';
 
-$link = mysql_connect(
-    "$host:$port",
-    $user,
-    $password
-);
-$db_selected = mysql_select_db(
-    $db,
-    $link
-);
+
+
+$server = 'localhost';
+$usuario = 'root';
+$senha = '';
+
+$connection = mysql_connect($server, $usuario, $senha);
+
+$db_selected = mysql_select_db('65cipm',$connection);
 mysql_query("SET NAMES 'utf8'");
 mysql_query('SET character_set_connection=utf8');
 mysql_query('SET character_set_client=utf8');

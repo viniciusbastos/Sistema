@@ -1,4 +1,5 @@
-<?php
+
+\<?php
 
 
 include "teste.php";
@@ -6,9 +7,23 @@ include "teste.php";
 //$data = date('y-m-d');
 //$acao = $_GET["acao"];
 //$diaAnterior = gmdate("y-m-d",time()-(3600*27));
-$data = $_POST["data2"];
-$data1 = $_POST["data"];
-$tipo =$_POST["tipo"];
+
+$data   = $_POST["data"];
+$data2  = $_POST["data2"];
+$tipo   = $_POST["tipo"];
+$hrini  = $_POST["hr_ini"];
+$hrfim  = $_POST["hr_fim"];
+$bairro = $_POST["bairro"];
+
+if($bairro == "TODOS"){
+    $bairro = "%";
+
+}
+if($tipo == "TODOS"){
+    $tipo = "%";
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,27 +32,26 @@ $tipo =$_POST["tipo"];
     <title>Relatório Of. Coordenador</title>
 </head>
 <body>
-<table  id="oco" border="1">
+<table  id="relat" border="1">
     <tr>
         <td id="cima">Tipo</td>
         <td id="cima">Bairro</td>
         <td id="cima">Resumo</td>
         <td id="cima">Data</td>
-        <td id="cima" colspan="2" align="center">Opçao</td>
+
         </tr>
         
-<?php
-$sql = "SELECT * FROM `ocorrencias` WHERE `Tipo` LIKE '$tipo' AND `Data` BETWEEN '$data' AND '$data1' ";
-$qry = mysql_query($sql);
-while($resultado = mysql_fetch_array($qry)) { ?>
+            <?php
+            $sql = "SELECT * FROM `ocorrencias` WHERE `Tipo` LIKE '$tipo' AND `Bairro` LIKE '$bairro' AND `Data` BETWEEN '$data' AND '$data2' AND `horario` BETWEEN '$hrini' AND '$hrfim'";
+            $qry = mysqli_query($con,$sql);
+            while($resultado = mysqli_fetch_array($qry)) {
+                ?>
         <tr>
         <td><?php echo $resultado[2]; ?></td>
-        <td><?php echo $resultado[3]; ?></td>
         <td><?php echo $resultado[4]; ?></td>
         <td><?php echo $resultado[5]; ?></td>
+        <td><?php echo date("d/m/Y", strtotime($resultado[6])); ?></td>
 
-        <td><a href="index.php?link=2&acao=Alterar&id=<?php echo $resultado[0] ; ?>" > Alterar</a></td>
-        <td><a href="index.php?link=2&acao=Excluir&id=<?php echo $resultado[0] ; ?>" > Excluir</a></td>
 
          </tr>
 

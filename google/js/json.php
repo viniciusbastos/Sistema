@@ -4,7 +4,7 @@ $query = "SELECT * FROM `ocorrencias` WHERE 1";
 $result = mysql_query($query);
 ?>
 <?php echo '[</br>' ?>
-<?php while ($row = @mysql_fetch_assoc($result)){
+<?php while ($row = @mysqli_fetch_assoc($result)){
     // ADD TO XML DOCUMENT NODE
     echo '{</br>';
     echo '"Id":';
@@ -18,3 +18,9 @@ $result = mysql_query($query);
     echo '}, </br>';
 }?>
 <?php echo ']' ?>
+<?php
+
+
+
+
+?>

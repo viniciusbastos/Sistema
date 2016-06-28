@@ -1,0 +1,1262 @@
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="/produtividade/estilos/estilos.css">
+
+<script type="text/javascript" src='/produtividade/dwr/interface/DwrService.js'></script>
+<script type="text/javascript" src='/produtividade/dwr/engine.js'></script>
+<script type="text/javascript" src='/produtividade/dwr/util.js'></script>
+<script type="text/javascript" src='/produtividade/javascript/telaGenerico.js'></script>
+<script type="text/javascript" src='/produtividade/javascript/dwrUtil.js'></script>
+<script type="text/javascript" src='/produtividade/javascript/telaManutencao.js'></script>
+<script type="text/javascript" src='/produtividade/javascript/default.js'></script>
+<link rel="stylesheet" type="text/css" href="/produtividade/estilos/calendar.css">
+<script type="text/javascript" src="/produtividade/javascript/calendar.js"></script>
+
+
+
+<title>Inserir Produtividade Policial</title>
+<style>
+@CHARSET "ISO-8859-1";
+
+/* -------------------------------------------------------------------------- */
+/* Estilos genÃ©ricos */
+
+body {
+	margin: 0px;
+	font-size: 8px;
+	font-family: Helvetica, Verdana, Arial;
+	background-color: #FFFFFF;
+	background-image: url(../images/bgSite.jpg);
+	background-repeat: repeat-x;
+}
+
+h2{
+	font-size: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #0C448F;
+}
+
+h3 {
+	font-size: 12px;
+	font-style: italic;
+	color: red;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Estilos para os controles de formulÃ¡rio */
+
+input, select, textarea {
+	border: 1px outset #072753;
+	font-size: 13px;
+	color: #072753;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 3px;
+}
+
+legend {
+	font-weight:bold;
+	color: #58595B;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Estilos para a grids */
+
+table.grid {
+	font-size: 13px;
+	width: 100%;
+	border-collapse: collapse;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #003;
+}
+
+h1{
+	text-align: left;
+	font-size: 22px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #072753;
+}
+
+table.grid caption {
+	font-weight: bold;
+	text-align: left;
+	color: #FFFFFF;
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	background-color: #001446;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #4d66a4;
+}
+
+table.grid th {
+	padding: 5px;
+}
+
+table.grid tbody tr:hover {
+	background: white;
+}
+
+table.grid tr.escuro {
+	background-color: rgb(241,246,250);
+}
+
+table.grid td {
+	border: 1px solid white;
+	padding: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+
+table.grid tfoot {
+	text-align: right;
+	background: #EEEEEE;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Estilos para tabelas (paineis) de cadastro */
+
+table.cadastro {
+	font-size: 13px;
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid;
+	border-color: white;
+	background-color: rgb(240,245,248);
+	font-family: Arial, Helvetica, sans-serif;
+	color: #072753;
+	padding: 5px;
+}
+
+table.cadastro caption {
+	font-weight: bold;
+	text-align: left;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 10px;
+	background-color: #072753;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Estilos para o div de 'Carregando...' do Ajax */
+
+.disabledZone {
+	position: absolute;
+	z-index: 1000;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;		
+}
+
+.messageZone {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background: red;
+	color: white;
+	font-size: medium;
+	font-weight: bold;
+	padding: 4px;
+}
+.style2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: #3E609D;
+	padding: 10px;
+	color: #FFF;
+}
+.style8 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #003;
+	padding: 5px;
+}
+</style>
+<script type="text/javascript"><!--
+window.onload = function() {
+	useLoadingMessage();
+	ativarTratamentoExcecao();
+}
+function sortSelect(obj){
+    var o = new Array();
+    for (var i=0; i<obj.options.length; i++){
+        o[o.length] = new Option(obj.options[i].text, obj.options[i].value, obj.options[i].defaultSelected, obj.options[i].selected);
+    }
+    o = o.sort(
+        function(a,b){ 
+            if ((a.text+"") < (b.text+"")) { return -1; }
+            if ((a.text+"") > (b.text+"")) { return 1; }
+            return 0;
+        } 
+    );
+
+    for (var i=0; i<o.length; i++){
+        obj.options[i] = new Option(o[i].text, o[i].value, o[i].defaultSelected, o[i].selected);
+    }
+}
+
+function hora(evento, objeto){
+	var keypress=(window.event)?event.keyCode:evento.which;
+	campo = eval (objeto);
+	if (campo.value == '00:00')
+	{
+		campo.value=""
+	}
+	caracteres = '0123456789';
+	separacao1 = ':';
+	conjunto1 = 2;
+	
+	if ((caracteres.search(String.fromCharCode (keypress))!=-1) && campo.value.length < (6))
+	{
+		if (campo.value.length == conjunto1 )
+		campo.value = campo.value + separacao1;
+		
+	}
+	else
+		event.returnValue = false;
+}
+
+
+
+
+
+
+function adicionarPolicial() {
+	document.forms[0].acaoAnterior.value = document.forms[0].acao.value;
+	submitform('NOVOPOL');
+}
+
+function excluirPolicial() {
+	if (validaExcluir('conteudoPolicial') && confirm(
+			"Tem certeza que deseja excluir o(s) registro(s) selecionado(s)?") ) {
+		document.forms[0].acaoAnterior.value = document.forms[0].acao.value;
+		submitform('EXCLUIRPOL');
+	}
+}
+
+function marcaTodos() {
+	document.forms[0].btnAdicionarObjeto.disabled = 
+		document.forms[0].todosTipicidades.checked;
+}
+
+function obtemPolicial(sender) {
+	if (sender.value != "")
+		DwrService.obterPolicial(retornoObtemPolicial, sender.value);
+}
+
+function retornoObtemPolicial(dados) {
+	var form = document.forms[0];
+	form.policial_nome.value = dados.nome;
+	form.policial_grauHierarquico.value = dados.grauHierarquico.descricao;
+	form.policial_opm.value = dados.opm.descricao;
+}
+
+
+function filtrar() {
+	if (validaDados()) submitform('FILTRAR');
+}
+
+
+function confirmar() {
+	if (validaDados()) submitform(document.forms[0].acao.value);
+}
+
+function validaDados() {
+	var msg = '';
+	var form = document.forms[0];
+ 
+	//Tipo de Atendimento não pode ficar em branco
+	var operacaoPolicial = form.operacaoPolicial;
+	if (operacaoPolicial.options[operacaoPolicial.selectedIndex].value == -1)
+		msg += 'Escolha pelo menos uma Operação Policial\n';	
+
+	//a descricao não pode ser nulo
+	if (form.descricao.value == '')
+		msg += 'Informe a descrição\n';
+
+
+	//testa o Turno
+	var turnos = form.turno;
+	if (turnos.options[turnos.selectedIndex].value == -1)
+		msg += 'Escolha um Turno\n';
+    
+	
+	//data não pode ser nula
+	if (form.dataProdutividade.value == ''){
+		msg += 'A data não pode estar em branco\n';	
+	} 
+		
+	//hora não pode ser nula
+	if (form.horaInicio.value == ''){
+		alert('A Hora Inicio não pode estar em branco');
+		
+	}else{ 
+	    if (!validarHora(form.horaInicio.value)){ 
+	       hora = form.horaInicio.value;
+	       alert(hora + ' É uma hora inválida. Use formato HH:mm');
+	           
+	    }   
+	}	
+
+	//hora não pode ser nula
+	if (form.horaFim.value == ''){
+		alert('A Hora Fim não pode estar em branco');
+	
+	}else{ 
+	    if (!validarHora(form.horaFim.value)){ 
+	       hora = form.horaFim.value;
+	       alert(hora + ' É uma hora inválida. Use formato HH:mm');
+	          
+	    }   
+	}	
+	
+	if (msg == '') return true;
+	else {
+		alert(msg);
+		return false;
+	}
+}
+
+
+//Valida Data
+function validarData(data){
+
+  tamanho = data.length;
+ 
+	 if (tamanho == 10) {
+	   bar1 = data.substr(2,1);
+	   bar2 = data.substr(5,1);  
+	 }else{
+	    return false;
+	 }
+ 
+  if ((bar1 == "/") && (bar2 == "/") ){
+	 dia = eval(data.substr(0,2));
+	 mes = eval(data.substr(3,2));
+	 ano = eval(data.substr(6,4));
+   
+ 	 if ((dia == 03)||(dia == 04)||(dia == 05)||(dia == 06)||(dia == 07 )||(dia == 08)||(dia == 09)){
+   		if ((mes >= 2) && (mes <= 4)){
+	       if ((ano > 2010) && (ano < 2012)){
+	           return true;
+	       }else{
+	           return false;
+	       }
+	    }else{
+	       return false;
+	    }      
+	  }else{      
+	    return false;
+	  }   
+   }else{
+	  return false;  
+   }   
+}
+
+
+//  Valida Hora
+function validarHora(pHora){
+
+ tamanho = pHora.length;
+ 
+ if (tamanho == 5) {
+   pts = pHora.substr(2,1);  
+ }else{
+    return false;
+ }
+ 
+  if (pts == ":"){
+
+    hora = eval(pHora.substr(0,2));
+    min  = eval(pHora.substr(3,2));   
+
+         if ((hora >= 0) && (hora <= 23)){
+           if ((min >= 0) && (min <=59)) {
+              return true;
+           }else{  
+             return false;
+           }
+         }else{
+           return false;
+         }
+
+   }else{
+      return false;
+   }    
+}
+
+function testaData(){
+
+    var form = document.forms[0];
+    
+	//data não pode ser nula
+	if (form.dataAtendimento.value == ''){  
+		alert('A data do atendimento não pode estar em branco');	
+		form.dataAtendimento.focus();
+	}else{ 
+	    if (!validarData(form.dataAtendimento.value)){ 
+	       data = form.dataAtendimento.value;
+	       alert(data + ' Está fora das datas do carnaval ou não é uma data válida. Use formato dd/mm/yyyy');
+	       form.dataAtendimento.focus();	       
+	    }   
+	}  
+}
+
+function testaHora(){
+
+	var form = document.forms[0];
+	
+	//hora não pode ser nula
+	if (form.horaInicio.value == ''){
+		alert('A Hora Inicio não pode estar em branco');
+		form.horaInicio.focus();	
+	}else{ 
+	    if (!validarHora(form.horaInicio.value)){ 
+	       hora = form.horaInicio.value;
+	       alert(hora + ' É uma hora inválida. Use formato HH:mm');
+	       form.horaInicio.focus();	       
+	    }   
+	}	
+}
+
+function testaHora2(){
+
+	var form = document.forms[0];
+	
+	//hora não pode ser nula
+	if (form.horaFim.value == ''){
+		alert('A Hora Fim não pode estar em branco');
+		form.horaFim.focus();	
+	}else{ 
+	    if (!validarHora(form.horaFim.value)){ 
+	       hora = form.horaFim.value;
+	       alert(hora + ' É uma hora inválida. Use formato HH:mm');
+	       form.horaFim.focus();	       
+	    }   
+	}	
+}
+
+
+
+</script>
+
+</head>
+
+<body>
+
+<form action="cadastro" method="get" name="frmPadrao">
+
+<input type="hidden" name="acao" value="CONFNOVO">
+<input type="hidden" name="acaoAnterior" value="CONFNOVO">
+<input name="codigo" value="" type="hidden">
+
+<h1>Inserir Produtividade Policial</h1>
+<h2></h2>
+<h3></h3>
+
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Dados da Produtividade Policial</caption>
+	<tbody>
+		<tr>
+			<td width="160" >Operação Policial</td>
+			<td width="800" style=width:"25%"><select id="operacaoPolicial" name="operacaoPolicial" onfocus="sortSelect(this)" >  			 
+				<option value="-1">--- ESCOLHA UM ITEM ---</option>
+				
+					<option value="1" >
+						INTENSIFICAÇÃO
+					</option>
+				
+					<option value="2" >
+						MUNZUÁ
+					</option>
+				
+					<option value="3" >
+						CORREDOR TURISTICO DE SALVADOR - CTS
+					</option>
+				
+					<option value="4" >
+						CENTRO HISTÓRICO DE SALVADOR - CHS
+					</option>
+				
+					<option value="5" >
+						COOPER
+					</option>
+				
+					<option value="6" >
+						MANUTENÇÃO DA ORDEM (40ª CIPM - Nordeste de Amaralina)
+					</option>
+				
+					<option value="7" >
+						APOLO
+					</option>
+				
+					<option value="9" >
+						SATURAÇÃO
+					</option>
+				
+					<option value="10" >
+						SILERE
+					</option>
+				
+					<option value="11" >
+						SAIDINHA BANCÁRIA
+					</option>
+				
+					<option value="12" >
+						MOSAICO
+					</option>
+				
+					<option value="13" >
+						ADMINISTRAÇÃO PRESENTE 
+					</option>
+				
+					<option value="14" >
+						GÊMEOS
+					</option>
+				
+					<option value="15" >
+						VISÃO NOTURNA
+					</option>
+				
+					<option value="16" >
+						VÔO DA ÁGUIA (Segunda a Sexta-feira)
+					</option>
+				
+					<option value="17" >
+						ÁGUIA (Sábado e domingo)
+					</option>
+				
+					<option value="18" >
+						FORÇA TÁTICA 
+					</option>
+				
+					<option value="19" >
+						RMS
+					</option>
+				
+					<option value="20" >
+						CARAPEBA - COPPA
+					</option>
+				
+					<option value="21" >
+						FPI - Fiscalização Preventiva Integrada - COPPA
+					</option>
+				
+					<option value="22" >
+						FISCALIZAÇÃO - COPPA
+					</option>
+				
+					<option value="23" >
+						COMBATE A FURTOS E ROUBOS DE VEÍCULOS (CPRC- ATLÂNTICO)
+					</option>
+				
+					<option value="24" >
+						CERCO URBANO
+					</option>
+				
+					<option value="25" >
+						ITINERANTE
+					</option>
+				
+					<option value="26" >
+						PAU DA LIMA EM PAZ
+					</option>
+				
+					<option value="27" >
+						CASTELO SEGURO
+					</option>
+				
+					<option value="28" >
+						DESOVA - CENTRO INDUSTRIAL DE ARATU (SIMÕES FILHO)
+					</option>
+				
+					<option value="30" >
+						COMANDO - CPRC-BTS
+					</option>
+				
+					<option value="32" >
+						PRODUTIVIDADE ORDINÁRIA
+					</option>
+				
+					<option value="33" >
+						TRÂNSITO LIVRE (53ª CIPM - MATA DE SÃO JOÃO)
+					</option>
+				
+					<option value="34" >
+						ATALAIA
+					</option>
+				
+					<option value="35" >
+						RONDA NOS BAIRROS
+					</option>
+				
+					<option value="36" >
+						PAZ NAS TRILHAS
+					</option>
+				
+					<option value="37" >
+						SENTINELA DO SERTÃO
+					</option>
+				
+					<option value="38" >
+						TALISMÃ
+					</option>
+				
+					<option value="39" >
+						BLITZ TODOS OS DIAS
+					</option>
+				
+					<option value="40" >
+						ROMARIA BOM JESUS DA LAPA
+					</option>
+				
+					<option value="41" >
+						INQUIETAÇÃO
+					</option>
+				
+					<option value="42" >
+						DIVISA SEGURA
+					</option>
+				
+					<option value="44" >
+						PASSARELA 
+					</option>
+				
+					<option value="45" >
+						CAVALO DE AÇO
+					</option>
+				
+					<option value="46" >
+						COMBATE A CRIMES CONTRA INSTITUIÇÕES FINANCEIRA
+					</option>
+				
+					<option value="47" >
+						OPERAÇÕES EM PRAÇAS DESPORTIVAS (Camp. Brasileiro, Baiano, Copa do Brasil)
+					</option>
+				
+					<option value="48" >
+						ESCOLTA DE PRESOS
+					</option>
+				
+					<option value="50" >
+						OP. EM MOVIMENTOS REINVIDICATÓRIOS
+					</option>
+				
+					<option value="51" >
+						ESTABILIZAÇÃO
+					</option>
+				
+					<option value="52" >
+						INTEGRAÇÃO
+					</option>
+				
+					<option value="53" >
+						RONDA ESCOLAR
+					</option>
+				
+					<option value="54" >
+						ABAETÉ
+					</option>
+				
+					<option value="55" >
+						SANTA CRUZ
+					</option>
+				
+					<option value="56" >
+						BCS - BAIRRO DA PAZ
+					</option>
+				
+					<option value="57" >
+						BCS - NORDESTE DE AMARALINA / VALE DAS PEDRINHAS
+					</option>
+				
+					<option value="58" >
+						BCS - SANTA CRUZ
+					</option>
+				
+					<option value="59" >
+						BCS - CHAPADA DO RIO VERMELHO
+					</option>
+				
+					<option value="60" >
+						BCS - CALABAR / ALTO DAS POMBAS
+					</option>
+				
+					<option value="61" >
+						BCS - ITINGA
+					</option>
+				
+					<option value="62" >
+						BCS - FAZENDA COUTOS
+					</option>
+				
+					<option value="63" >
+						BCS - RIO SENA
+					</option>
+				
+					<option value="64" >
+						BCS - GEORGE AMÉRICO - FEIRA DE SANTANA
+					</option>
+				
+					<option value="65" >
+						BCS - MONTE CRISTO - ITABUNA
+					</option>
+				
+					<option value="66" >
+						CHOQUE ALERTA
+					</option>
+				
+					<option value="67" >
+						APOIO OPERACIONAL
+					</option>
+				
+					<option value="68" >
+						CENTRAL
+					</option>
+				
+					<option value="69" >
+						VERÃO
+					</option>
+				
+					<option value="70" >
+						ABADÁ
+					</option>
+				
+					<option value="71" >
+						CARNAVAL 
+					</option>
+				
+					<option value="72" >
+						COMANDO EM ALERTA - CPRC-BTS
+					</option>
+				
+					<option value="73" >
+						CASA LIMPA
+					</option>
+				
+					<option value="74" >
+						GARRA
+					</option>
+				
+					<option value="75" >
+						SEMANA SANTA
+					</option>
+				
+					<option value="76" >
+						SÃO JOÃO
+					</option>
+				
+					<option value="77" >
+						COPA DAS CONFEDERAÇÕES FIFA 2013
+					</option>
+				
+					<option value="78" >
+						VISIBILIDADE
+					</option>
+				
+					<option value="79" >
+						REFORÇO OPERACIONAL
+					</option>
+				
+					<option value="80" >
+						POLICIAMENTO COMUNITÁRIO ESCOLAR
+					</option>
+				
+					<option value="81" >
+						MICARETA DA LIBERDADE
+					</option>
+				
+					<option value="82" >
+						PAZALEM
+					</option>
+				
+					<option value="83" >
+						STELLA MARIS
+					</option>
+				
+					<option value="84" >
+						RÉVEILLON
+					</option>
+				
+					<option value="85" >
+						NATAL
+					</option>
+				
+					<option value="86" >
+						BURITI
+					</option>
+				
+					<option value="87" >
+						RODOVIA SEGURA
+					</option>
+				
+					<option value="88" >
+						FOLIA E PAZ
+					</option>
+				
+					<option value="89" >
+						SIGMA
+					</option>
+				
+					<option value="91" >
+						SOSSEGO E TRANQUILIDADE
+					</option>
+				
+					<option value="92" >
+						PACTO PELA VIDA
+					</option>
+				
+					<option value="93" >
+						IMPACTO
+					</option>
+				
+					<option value="94" >
+						ROME (Rondas Monitoradas Eletronicamente)
+					</option>
+				
+					<option value="95" >
+						SEGURANÇA E PAZ
+					</option>
+				
+					<option value="96" >
+						PACTO PELA VIDA
+					</option>
+				
+					<option value="97" >
+						PRESENÇA
+					</option>
+				
+					<option value="98" >
+						VÉU DE NOIVA
+					</option>
+				
+					<option value="99" >
+						SAFRA
+					</option>
+				
+					<option value="101" >
+						VARREDURA 
+					</option>
+				
+					<option value="102" >
+						BLOQUEIO
+					</option>
+				
+					<option value="104" >
+						OCUPAÇÃO
+					</option>
+				
+					<option value="105" >
+						HÉRCULES
+					</option>
+				
+					<option value="107" >
+						VISÃO
+					</option>
+				
+					<option value="108" >
+						CVLI
+					</option>
+				
+					<option value="109" >
+						TRANSPORTE SEGURO
+					</option>
+				
+					<option value="111" >
+						12 EM AÇÃO
+					</option>
+				
+					<option value="112" >
+						REDUÇÃO DE INDICADORES DE CVLI E CVP
+					</option>
+				
+					<option value="113" >
+						CORRENTE DO BEM
+					</option>
+				
+					<option value="114" >
+						HERMES
+					</option>
+				
+					<option value="115" >
+						BCS - CAMAÇARI - POCH II
+					</option>
+				
+					<option value="116" >
+						BRASIL INTEGRADO
+					</option>
+				
+					<option value="117" >
+						PARAMOTOS
+					</option>
+				
+					<option value="118" >
+						CLANDESTINO
+					</option>
+				
+					<option value="119" >
+						APPROPINQUANT
+					</option>
+				
+					<option value="121" >
+						METROPOLITANA
+					</option>
+				
+					<option value="122" >
+						ELO TÁTICO
+					</option>
+				
+					<option value="123" >
+						AMANHECER TRANQUILO
+					</option>
+				
+					<option value="124" >
+						JUVENTUDE SADIA
+					</option>
+				
+					<option value="125" >
+						TOLERÂNCIA ZERO
+					</option>
+				
+					<option value="126" >
+						DIREÇÃO SEGURA
+					</option>
+				
+					<option value="127" >
+						PAZ NO TRÂNSITO
+					</option>
+				
+					<option value="128" >
+						OPERAÇÃO RASTILHO
+					</option>
+				
+					<option value="129" >
+						OP RM PENHA
+					</option>
+				
+					<option value="130" >
+						GERRCA
+					</option>
+				
+					<option value="131" >
+						OPERAÇÕES EM PRESÍDIOS
+					</option>
+				
+					<option value="132" >
+						SARAMANDAIA
+					</option>
+				
+					<option value="133" >
+						MERCADO SEGURO
+					</option>
+				
+					<option value="134" >
+						VERIFICAÇÃO IMEDIATA
+					</option>
+				
+					<option value="136" >
+						ESPARTA
+					</option>
+				
+					<option value="137" >
+						AMARGOSA EM PAZ
+					</option>
+				
+					<option value="138" >
+						CONCÓRDIA
+					</option>
+				
+					<option value="139" >
+						ROMEU E JULIETA
+					</option>
+				
+					<option value="140" >
+						MENORAH
+					</option>
+				
+					<option value="141" >
+						DOM E RAVEL
+					</option>
+				
+					<option value="142" >
+						NIX
+					</option>
+				
+					<option value="143" >
+						QUEIMADINHA-BARAÚNAS
+					</option>
+				
+					<option value="145" >
+						DISTRITO IV
+					</option>
+				
+			</select></td>				
+		</tr>	
+		 <tr>
+			<td width="160">Descrição</td>
+			<td width="800"><input type="text" name="descricao" size="29" value=""></td>
+		</tr>
+		<tr>
+			<td style="width: 25%">Data</td>
+			<td><input type="text" id="dataProdutividade"  value="" name="dataProdutividade" style="cursor:pointer;" onclick="GetDate(this);" readonly="readonly" size="10" maxlength="10"/> 
+			<a href="#" onclick="document.getElementById('dataProdutividade').value='';">Limpar</a></td>
+		</tr>
+		<tr>			
+			<td width="160" >Hora Inicio</td>
+			<td width="800"><input name="horaInicio"  maxlength=5 value=""  onblur="testaHora()" onKeyPress="hora(event, this)" >(HH:MM)
+			<a href="#" onclick="document.getElementById('horaInicio').value='';">Limpar</a></td>
+         </tr>	
+		<tr>			
+			<td width="160" >Hora Fim</td>
+			<td width="800"><input name="horaFim"  maxlength=5 value=""  onblur="testaHora2()" onKeyPress="hora(event, this)"  >(HH:MM)
+			<a href="#" onclick="document.getElementById('horaFim').value='';">Limpar</a></td>
+        </tr>	
+		<tr>
+			<td width="160">Turno</td>
+			<td width="800">
+				<select onfocus="sortSelect(this)" id="lstTurno" name="turno">
+				<option value="-1">-- Escolha um Turno --</option>
+					
+						<option value="1" >
+							Matutino
+						</option>
+					
+						<option value="2" >
+							Vespertino
+						</option>
+					
+						<option value="3" >
+							Noturno
+						</option>
+						
+				</select>
+			</td>
+		</tr>		
+	    <tr>
+			<td width="160">Latitude</td>
+			<td width="800"><input type="text" name="latitude" value=""></td>
+		</tr>
+		 <tr>
+			<td width="160">Longitude</td>
+			<td width="800"><input type="text" name="longitude" value=""></td>
+		</tr>
+	
+	</tbody>
+</table>
+<br/>
+<br/>
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Comandante da Operação</caption>
+	<tbody>
+		<tr>
+			<td width="160">Matrícula</td>
+			<td width="320">
+				<input name="policial_codigo" value="" type="hidden">
+				<input name="policial_matricula_ant" value="" type="hidden">
+				<input name="policial_matricula" value=""  onblur="obtemPolicial(this)";">
+			</td>
+			<td width="160">Nome</td>
+			<td width="320"><input name="policial_nome" size="70" value="" disabled="disabled"  ></td>
+		</tr>
+		<tr>
+			<td width="160">Grau Hierárquico</td>
+			<td width="320"><input name="policial_grauHierarquico"   value="" disabled="disabled" ></td>
+			<td width="160">OPM</td>
+			<td width="320"><input name="policial_opm"  value="" disabled="disabled"  ></td>
+		</tr>
+		<!--td><input type="button" name="btnAdicionarPolicial" value="Adicionar" onClick="adicionarPolicial()"></td-->
+	</tbody>
+</table>
+
+<br/>
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Dados Quantitativos Viaturas</caption>
+	<tbody>
+		<tr>
+			<td width="160">Viaturas da OPM </td>
+			<td width="800"><input name="numVtrOPM" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Viaturas de Outra(s) OPM(s) </td>
+			<td width="800"><input name="numVtrOutrasOPM" maxlength=3 value="" ></td>
+		</tr>
+	    <tr>
+			<td width="160">Viaturas do Orgão Municipal de Trânsito </td>
+			<td width="800"><input name="numVtrOrgaoMunicipalTransito" maxlength=3  value="" ></td>
+		</tr>
+	    <tr>
+			<td width="160">Viaturas do DETRAN </td>
+			<td width="800"><input name="numVtrDETRAN" maxlength=3  value="" ></td>
+		</tr>
+	    <tr>
+			<td width="160">Viaturas da SEFAZ </td>
+			<td width="800"><input name="numVtrSEFAZ" maxlength=3  value="" ></td>
+		</tr>
+	     <tr>
+			<td width="160">Viaturas de Outros Orgãos </td>
+			<td width="800"><input name="numVtrOutrosOrgaos" maxlength=3  value="" ></td>
+		</tr>
+	</tbody>
+</table>
+<br/>
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Dados Quantitativos Escoltas</caption>
+	<tbody>
+		<tr>
+			<td width="160">Escoltas Realizadas</td>
+			<td width="800"><input name="numEscoltasRealizadas" maxlength=3  value="" ></td>
+		</tr> 
+	</tbody>
+</table>
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Dados Quantitativos Efetivo</caption>
+	<tbody>
+		<tr>
+			<td width="160">Efetivo da OPM </td>
+			<td width="800" ><input name="numEfetivoOpm" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Efetivo de Apoio </td>
+			<td width="800"><input name="numEfetivoApoio" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Efetivo de Reforço </td>
+			<td width="800"><input name="numEfetivoReforco" maxlength=3  value="" ></td>
+		</tr> 
+	</tbody>
+</table>
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Dados Quantitativos Abordagem, Prisão e Apreensão</caption>
+	<tbody>
+		<tr>
+			<td width="160">Pessoas Abordadas </td>
+			<td width="320" ><input name="numPessoasAbordadas" maxlength=3  value="" ></td>
+			<td width="160">Estabelecimentos Abordados </td>
+			<td width="320" ><input name="numEstabelecimentosAbordados" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Pessoas Conduzidas a CP </td>
+			<td width="320" ><input name="numPessoasConduzidasCP" maxlength=3  value="" ></td>
+			<td width="160">Presos Flagrante Delito </td>
+			<td width="320" ><input name="numPresosFlagranteDelito" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Adolescentes Apreendidos</td>
+			<td width="320" ><input name="numAdolescentesApreendidos" maxlength=3  value="" ></td>
+			<td width="160">TCO Lavrados </td>
+			<td width="320" ><input name="numTCOLavrados" maxlength=3  value="" ></td>
+		</tr> 
+	    <tr>
+			<td width="160">Auto Resistência Lavrado </td>
+			<td width="320" ><input name="numAutoResistenciaLavrado" maxlength=3  value="" ></td>
+			<td width="160">Mandados Prisão Cumpridos</td>
+			<td width="320" ><input name="numMandadosPrisaoCumpridos" maxlength=3  value="" ></td>
+		</tr> 
+	    <tr>
+			<td width="160">Armas de Fogo Apreendidas </td>
+			<td width="320" ><input name="numArmasFogoApreendidas" maxlength=1  value="" ></td>
+			<td width="160">Armas Brancas Apreendidas</td>
+			<td width="320" ><input name="numArmasBrancasApreendidas" maxlength=1  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Veículos Quatro Rodas Abordados</td>
+			<td width="320" ><input name="numVeiculos4RodasAbordados" maxlength=3  value="" ></td>
+			<td width="160">Veículos Duas Rodas Abordados</td>
+			<td width="320" ><input name="numVeiculos2RodasAbordados" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Veículos Transporte Coletivo Abordados</td>
+			<td width="320" ><input name="numVeiculosTransporteColetivoAbordados" maxlength=3  value="" ></td>
+			<td width="160">Ponto de Ônibus Abordados</td>
+			<td width="320" ><input name="numPontosOnibusAbordados" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Veículos Recuperados</td>
+			<td width="320" ><input name="numVeiculosRecuperados" maxlength=3  value="" ></td>
+			<td width="160">Veículos Quatro Rodas Autuados</td>
+			<td width="320" ><input name="numVeiculos4RodasAutuados" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>  
+		    <td width="160">Veículos Duas Rodas Autuados</td>
+			<td width="320" ><input name="numVeiculos2RodasAutuados" maxlength=3  value="" ></td>
+			<td width="160">Veículos Quatro Rodas Apreendidos</td>
+			<td width="320" ><input name="numVeiculos4RodasApreendidos" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Veículos Duas Rodas Apreendidos</td>
+			<td width="320" ><input name="numVeiculos2RodasApreendidos" maxlength=3  value="" ></td>
+			<td width="160">Veículos Transporte Coletivo Apreendidos</td>
+			<td width="320" ><input name="numVeiculosTransporteColetivoApreendidos" maxlength=3  value="" ></td>
+		</tr> 
+	   	<tr>
+			<td width="160">Taxi Abordados</td>
+			<td width="320" ><input name="numTaxiAbordados" maxlength=3  value="" ></td>
+		    <td width="160">CNH Apreendidas</td>
+			<td width="320" ><input name="numCNHApreendidas" maxlength=3  value="" ></td>
+		</tr>       
+	</tbody>
+</table>
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Dados Quantitativos Drogas</caption>
+	<tbody>
+		<tr>
+			<td width="160">Maconha Apreendida (Nº de Ocorrências)</td>
+			<td width="800" ><input name="numMaconhaApreendidaemKg" maxlength=1  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Cocaína Apreendida (Nº de Ocorrências)</td>
+			<td width="800" ><input name="numCocainaApreendidaemGramas" maxlength=1  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Crack Apreendido (Nº de Ocorrências)</td>
+			<td width="800" ><input name="numCrackApreendidaemGramas" maxlength=1 value="" ></td>
+		</tr> 
+			<tr>
+			<td width="160">Outras Drogas Apreendidas (Nº de Ocorrências)</td>
+			<td width="800" ><input name="numOutrasdrogasapreendidas" maxlength=1  value="" ></td>
+		</tr> 
+	</tbody>
+</table>
+<table width="960" cellpadding="5" cellspacing="0" class="cadastro">
+	<caption>Dados Quantitativos Ocorrência</caption>
+	<tbody>
+		<tr>
+			<td width="160">Ocorrência Envolvendo PM  </td>
+			<td width="800" ><input name="numOcorrenciasEnvolvendoPM" maxlength=3  value="" ></td>
+		</tr> 
+		<tr>
+			<td width="160">Ocorrência Envolvendo Policial Civil  </td>
+			<td width="800" ><input name="numOcorrenciasEnvolvendoPCivil" maxlength=3  value="" ></td>
+		</tr>
+		<tr>
+			<td width="160">Ocorrência Envolvendo Forças Armadas  </td>
+			<td width="800" ><input name="numOcorrenciasEnvolvendoForcasArmadas" maxlength=3  value="" ></td>
+		</tr>  
+	
+	</tbody>
+</table>
+<p>
+	<input type="button" id="btnOk" name="btnOk" value="Confirmar" onclick="confirmar()"> 
+	<input type="submit" name="btnCancelar" value="Cancelar" onclick="defineAcao('CANCELAR')">
+</p>
+
+</form>
+
+</body>
+
+</html>

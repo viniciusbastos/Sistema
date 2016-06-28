@@ -42,11 +42,11 @@
          <p>Local do evento:<input type="text" placeholder="Local do Evento" id="Local" name="Local">
          </p>
 
-         <?php $query = mysql_query("SELECT * FROM `tipo de ocorrencias`");
-         $query2 = mysql_query("SELECT * FROM `BAIRROS`");
+         <?php $query = mysqli_query($con,"SELECT * FROM `tipo de ocorrencias`");
+         $query2 = mysqli_query($con,"SELECT * FROM `BAIRROS`");
          ?>
          <p>bairro <select style=width:200px name="bairro" value="bairro"></br>
-             <?php while($prod2 = mysql_fetch_array($query2)) { ?>
+             <?php while($prod2 = mysqli_fetch_array($query2)) { ?>
              <option> <?php echo $prod2[0]; ?></option>
              <?php } ?></select>
          </p>

@@ -1,5 +1,5 @@
 <?php
-include "config.php";
+include "teste.php";
 
 function parseToXML($htmlStr) 
 { 

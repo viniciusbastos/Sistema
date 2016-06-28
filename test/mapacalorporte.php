@@ -1,3 +1,5 @@
+
+
 <script>
     function Homici(){
         document.write("HOMICÍDIO")
@@ -5,14 +7,14 @@
 </script>
 
 <?php
-include "config.php";
+include "teste.php";
 $query = "SELECT * FROM `ocorrencias` WHERE `Tipo` LIKE 'PORTE ILEGAL ARMA DE FOGO'";
 $result = mysql_query($query);
 ?>
 <html>
 <head>
 <meta charset="utf-8">
-<title> Mapa de Kernel - Apreensão de Armas 2014</title>
+<title>Heatmaps</title>
 <style>
     html, body, #map-canvas {
         height: 100%;
@@ -89,11 +91,11 @@ function changeGradient() {
 }
 
 function changeRadius() {
-    heatmap.set('radius', heatmap.get('radius') ? null : 25);
+    heatmap.set('radius', heatmap.get('radius') ? null : 20);
 }
 
 function changeOpacity() {
-    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.4);
+    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -108,8 +110,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
     <button onclick="changeRadius()">Change radius</button>
     <button onclick="changeOpacity()">Mudar opacitidade</button>
 </div>
-<div id="lateral">
 <div id="map-canvas"></div>
-</div>
 </body>
 </html>

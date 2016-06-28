@@ -1,8 +1,8 @@
 <?php
 include "teste.php";
 //criaçao de tabela mysql
-$query2 = mysql_query("SELECT * FROM `BAIRROS`");
-$query = mysql_query("SELECT * FROM `tipo de ocorrencias`");
+$query2 = mysqli_query($con,"SELECT * FROM `BAIRROS`");
+$query3 = mysqli_query($con,"SELECT * FROM `tipo de ocorrencias`");
 ?>
 
 
@@ -13,18 +13,45 @@ $query = mysql_query("SELECT * FROM `tipo de ocorrencias`");
     <title></title>
 </head>
 <body>
-<h3>Listar Ordens de Policiamento Ostensivo</h3>
-<form method="post" action="index.php?link=1">
-    <p>Digite a data Inicial:<input type="date" name="data2"></p>
-    <p>Digite a data Final:<input type="date" name="data"></p>
-    <p> tipo <select style=width:200px name="tipo" value="<?php echo $tipo ?>"></br>
-            <?php while($prod = mysql_fetch_array($query)) { ?>
-                <option> <?php echo $prod[0]; ?></option>
-            <?php } ?>
-        </select></br</p>
-        </select></br>
-<input type="submit" value="Consultar">
 
-</form>
+    <form  method="post">
+        <h2 align="center">Estatística por Período</h2>
+        <legend></legend>
+        <fieldset> <legend>Data</legend>
+            Inicial: <input type="date" name="data" ">
+            Final: <input type="date" name="data2" ">
+        </fieldset>
+        <fieldset><legend>Horário</legend>
+            Inicial: <input type="time" name="hr_ini">
+            Final: <input type="time" name="hr_fim">
+
+        </fieldset>
+        <fieldset>
+            <legend>Bairro e Tipo</legend>
+
+            Bairro: <select style=width:200px name="bairro"></br>
+                <?php while($prod2 = mysqli_fetch_array($query2)) { ?>
+                    <option> <?php echo $prod2[0]; ?></option>
+                <?php } ?>
+
+            </select>
+            <br>
+            <br>
+            Tipo:   <select style=width:230px name="tipo" > </br>
+                <?php while($prod = mysqli_fetch_array($query3)) { ?>
+                    <option> <?php echo $prod[0]; ?></option>
+                <?php } ?>
+            </select>
+            <input type="submit" value="CONSULTAR" class="btn">
+        </fieldset>
+
+
+        <p>
+
+
+        </p>
+
+    </form>
+<?php include "List_oco.php"; ?>
 </body>
 </html>

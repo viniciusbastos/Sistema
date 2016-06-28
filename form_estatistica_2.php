@@ -6,18 +6,18 @@ include "teste.php";
 $id = $_GET["id"];
 $acao = "Inserir";
 
-$sql = "SELECT * FROM `Servico`";
-$qry = mysql_query($sql);
-$resultado = mysql_fetch_array($qry);
+$sql        = "SELECT * FROM `Servico`";
+$qry        = mysqli_query($con, $sql);
+$resultado  = mysqli_fetch_array($qry);
 
 
-$query = mysql_query("SELECT * FROM `tipo de ocorrencias` ORDER BY `tipo de ocorrencias`.`Servico` ASC");
-$query2 = mysql_query("SELECT `Viaturas` FROM `viaturas`");
-$query3 = mysql_query("SELECT * FROM `BAIRROS` ORDER BY `Campo1` ASC");
+$query  = mysqli_query($con,"SELECT * FROM `tipo de ocorrencias` ORDER BY `tipo de ocorrencias`.`Servico` ASC");
+$query2 = mysqli_query($con,"SELECT `Viaturas` FROM `viaturas`");
+$query3 = mysqli_query($con,"SELECT * FROM `BAIRROS` ORDER BY `Campo1` ASC");
 
 
-$data = $resultado[1];
-$turno = $resultado[2];
+$data   = $resultado[1];
+$turno  = $resultado[2];
 
 
 ?>
@@ -45,7 +45,7 @@ $turno = $resultado[2];
             <legend>Bairro</legend>
 
             Bairro: <select style=width:200px name="bairro"></br>
-                <?php while($prod2 = mysql_fetch_array($query3)) { ?>
+                <?php while($prod2 = mysqli_fetch_array($query3)) { ?>
                     <option> <?php echo $prod2[0]; ?></option>
                 <?php } ?>
 
@@ -53,7 +53,7 @@ $turno = $resultado[2];
         </fieldset>
 
         Tipo: <select style=width:230px name="tipo" > </br>
-        <?php while($prod = mysql_fetch_array($query)) { ?>
+        <?php while($prod = mysqli_fetch_array($query)) { ?>
             <option> <?php echo $prod[0]; ?></option>
         <?php } ?>
 
@@ -76,22 +76,21 @@ $turno = $resultado[2];
 <?php
 
 include "teste.php";
-$data = $_POST["data"];
-$data2 = $_POST["data2"];
-$tipo = $_POST["tipo"];
-$hrini =$_POST["hr_ini"];
-$hrfim =$_POST["hr_fim"];
-$bairro =$_POST["bairro"];
-echo $bairro;
-if($bairro == "TODOS"){
-    $bairro = "%";
-    echo $bairro;
+            $data   = $_POST["data"];
+            $data2  = $_POST["data2"];
+            $tipo   = $_POST["tipo"];
+            $hrini  = $_POST["hr_ini"];
+            $hrfim  = $_POST["hr_fim"];
+            $bairro = $_POST["bairro"];
+
+    if($bairro == "TODOS"){
+             $bairro = "%";
 }
 
 
 
 $sql = "SELECT `tipo`, COUNT(`tipo`), `Latitude`,`Longitude` FROM `ocorrencias` WHERE `Tipo` LIKE '$tipo' AND `Bairro` LIKE '$bairro' AND `Data` BETWEEN '$data' AND '$data2' AND `horario` BETWEEN '$hrini' AND '$hrfim' GROUP BY `tipo` ";
-$qry = mysql_query($sql) or die ("nao foi possivel inserir os dados");
+$qry = mysqli_query($con,$sql) or die ("nao foi possivel inserir os dados");
 
 ?>
 
@@ -102,7 +101,7 @@ $qry = mysql_query($sql) or die ("nao foi possivel inserir os dados");
         var map, pointarray, heatmap;
 
         var taxiData = [
-            <?php while ($row = @mysql_fetch_assoc($qry)){
+            <?php while ($row = @mysqli_fetch_assoc($qry)){
                 // ADD TO XML DOCUMENT NODE
                 echo 'new google.maps.LatLng(';
                 echo  $row['Latitude'] .',';

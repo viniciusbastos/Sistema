@@ -3,18 +3,27 @@
 
 include "teste.php";
 //criaçao de tabela mysql
-$id = $_POST["id"];
-$acao = $_POST["acao"];
+$id           = $_POST["id"];
+$acao         = $_POST["acao"];
+$form         = $_POST["form"];
+$servico      = $_POST["serv"] ;
+$tipo         = $_POST["tipo"];
+$bairro       = $_POST["bairro"];
+$resumo       = $_POST["resumo"];
+$data         = $_POST["data"];
+$horario      = $_POST["hr"];
+$local        = $_POST["local"];
+$latitude     = $_POST["latitude"];
+$longitude    = $_POST["longitude"];
+$tipoarm      = $_POST["tipoarma"];
+$calibre      = $_POST["calibre"];
+$gu           = $_POST["gu"];
+$num          = $_POST["num"];
+$marca        = $_POST["marca"];
+$iluminacao   = $_POST["iluminacao"];
+$pavimentacao = $_POST["pavimentacao"];
+$iniciativa   = $_POST["iniciativa"];
 
-$servico = $_POST["serv"] ;
-$tipo = $_POST["tipo"];
-$bairro = $_POST["bairro"];
-$resumo = $_POST["resumo"];
-$data = $_POST["data"];
-$horario = $_POST["hr"];
-$local = $_POST["local"];
-$latitude = $_POST["latitude"];
-$longitude = $_POST["longitude"];
 
 echo $servico;
 echo $tipo;
@@ -49,6 +58,8 @@ mysql_query($sql) or die ("nao foi possivel inserir os dados");
 }
 if($acao == "Excluir") {
 
+
+
     $sql = "DELETE from  `ocorrencias`  WHERE id = $id";
     mysql_query($sql) or die ("nao foi possivel deletar os dados");
 }
@@ -56,9 +67,16 @@ if($acao == "Excluir") {
 
 if($acao == "Inserir") {
 
-    $sql = "INSERT INTO `ocorrencias`( `id_Serv`, `Tipo`, `Bairro`, `Resumo`,`Data`, `horario`, `Local`,`Latitude`, `Longitude`) VALUES ($servico ,'$tipo', '$bairro','$resumo','$data', '$horario', '$local','$latitude', '$longitude')";
-    mysql_query($sql) or die ("nao foi possivel inserir os dados");
+    $sql = "INSERT INTO `ocorrencias`( `id_Serv`, `Tipo`, `Bairro`, `Resumo`,`Data`, `horario`, `Local`,`Iniciativa`, `Iluminacao`, `Pavimentacao`,`Latitude`, `Longitude`) VALUES ($servico ,'$tipo', '$bairro','$resumo','$data', '$horario', '$local','$iniciativa','$iluminacao','$pavimentacao','$latitude', '$longitude')";
+    mysql_query($sql) or die (mysql_error($link));
     echo "Dados inseridos com sucesso!";
 }
-echo "<script type = 'text/JavaScript'> location.href ='list_serv.php'</script> "
+if($form == "arma") {
+    $sql2 = "INSERT INTO `65cipm`.`arma` ( `ident`, `tipoarma`, `Numeração`, `Marca`, `calibre`, `guresp`) VALUES ($ident, '$tipoarm','$num','$marca', '$calibre', '$gu')";
+    mysql_query($sql2) or die ("nao foi possivel inserir na tabela armas os dados");
+}
+
+
+
+echo "<script type = 'text/JavaScript'> location.href ='http://localhost:8888/sistema/index.php?link=12'</script> "
 ?>

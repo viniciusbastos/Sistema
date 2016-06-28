@@ -1,5 +1,7 @@
 <?php
-session_start();
-session_destroy();
-header("Location: index.html"); exit;
+include "logica-usuario.php";
+logout();
+$_SESSION["success"] = "Usuário desconectado com sucesso.";
+header("Location: index.php");
+die();
 ?>

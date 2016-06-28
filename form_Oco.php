@@ -1,124 +1,94 @@
-
-
-
 <?php
 
 
 include "teste.php";
+include "funcoes.php";
 //criaçao de tabela mysql
-$id = $_GET["id"];
-$acao = $_GET["acao"];
-$form = $_GET["form"];
-$sql = "SELECT * FROM `ocorrencias` WHERE id = $id";
-$qry = mysql_query($sql);
-$resultado = mysql_fetch_array($qry);
+$id     = $_GET["id"];
+$acao   = $_GET["acao"];
+$form   = $_GET["form"];
 
-$query = mysql_query("SELECT * FROM `tipo de ocorrencias` ORDER BY `tipo de ocorrencias`.`Servico` ASC");
-$query2 = mysql_query("SELECT * FROM `BAIRROS` ORDER BY `Campo1` ASC");
-$query3 = mysql_query("SELECT `Viaturas` FROM `viaturas` WHERE 1");
-
-
-$ident = $resultado[0];
-$servico = $resultado[1] ;
-$tipo = $resultado[2];
-$bairro = $resultado[3];
-$resumo = $resultado[4];
-$data =$resultado[5];
-$horario = $resultado[6];
-$local = $resultado[7];
+$sql        = "SELECT * FROM `ocorrencias` WHERE `id` = $id";
+$qry        = mysqli_query($con, $sql);
+$row        = mysqli_fetch_array($qry);
+$query      = mysqli_query($con,"SELECT * FROM `tipo de ocorrencias` ORDER BY `tipo de ocorrencias`.`Servico` ASC");
+$query3     = mysqli_query($con,"SELECT `Viaturas` FROM `viaturas` WHERE 1");
 
 ?>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-<head lang="en">
+<html>
+<head lang="pt-br">
     <meta charset="UTF-8">
-    <title>Relatório Of. Coordenador</title>
-    <link rel="stylesheet" type="text/css" href="_css/media.css"/>
-
+    <title>Formulário de Ocorrencias</title>
 </head>
 <body>
     <form style="margin-left: 10px" action="Op_oco.php" method="post">
+
         <fieldset  id="Informaçoes Gerais"><legend>Informaçoes Gerais</legend>
+
         <input type="hidden" name="serv" value="<?php echo $id ?>"></br>
-        Tipo: <select style=width:230px name="tipo" value="<?php echo $tipo ?>"></br>
-            <?php while($prod = mysql_fetch_array($query)) { ?>
+        Tipo: <select style=width:230px:margin-left:200px; name="tipo" value="<?php echo $tipo ?>"></br>
+            <?php while($prod = mysqli_fetch_array($query)) { ?>
                 <option> <?php echo $prod[0]; ?></option>
             <?php } ?>
-
         </select>
-            </br>
+            <br>
+            <br>
+
+            Inciativa da Ocorrencia: <br>
+            <input type='radio' name="iniciativa" value='Pm'>Iniciativa do PM<br>
+            <input type='radio' name="iniciativa" value='CICOM'>CICOM<br>
+            <input type='radio' name="iniciativa" value='Direito'>Direto ao Policial
         </fieldset>
         </br>
-        <?php
 
-        if ($form == "arma"){
-            echo "        <fieldset  id='arma'><legend>Arma de Fogo</legend>";
-            echo "<input type='hidden'value='arma'>";
-            echo "Tipo de Arma: <select name='tipoarma'><option>Revolver</option>
-                <option>Pistola</option>
-                <option>Carabina</option>
-                <option>Fuzil</option>
-               </select>   ";
-         echo "Calibre: <select name='calibre'><option>32</option>
-                <option>38</option>
-                <option>40</option>
-                <option>5.56</option>
-                <option>7.62</option>
-               </select> </br>";
 
-        echo "Gu Empregada: <select name='gu'>
-                <option>9.6507</option>
-                <option>9.6577</option>
-                <option>9.6572</option>
-                <option>9.6565</option>
-                <option>9.6534</option>
-                <option>9.6539</option>
-                <option>9.6540</option>
-                <option>R0025</option>
-                <option>G.E.T.O. 2 Rodas</option>
-               </select> </br>";
-            echo "</fieldset>";
-        }
-        ?>
-        <qjwjdiw>ndsajnjavds</qjwjdiw>
 
         </br>
+
+
         <fieldset  id="Local"><legend>Local, Data e Horario</legend>
 
-            Bairro: <select style=width:200px name="bairro" value="<?php echo $bairro ?>"></br>
-            <?php while($prod2 = mysql_fetch_array($query2)) { ?>
-                <option> <?php echo $prod2[0]; ?></option>
-            <?php } ?>
+            Bairro: <? bairro() ?>
 
-        </select></br>
-        Data: <input type="date" name="data" value="<?php echo $data ?>">
-        Horario: <input type="time" name="hr" value="<?php echo $horario ?>"></br>
+        Data: <input type="date" name="data" value="<?php echo $row['Data'] ?>">
+        Horario: <input type="time" name="hr" value="<?php echo $row['horario'] ?>"> <br><br>
 
-        local: <input type="text" name="local" value="<?php echo $local ?>" ></br>
+        Local: <input style="width: 200px" class="esque" type="text" name="local" value="<?php echo $row['Local'] ?>" ></br>
+        Iluminação da Via:<br>
+        <input type="radio" name="iluminacao" value="Presente">Boa Iluminação<br>
+        <input type="radio" name="iluminacao" value="Prejudicada">Iluminação Prejudicada<br>
+        <input type="radio" name="iluminacao" value="Ausente">Ausente<br>
+            <input type="radio" name="iluminacao" value="Não Informado">Não Informado<br>
+
+        Pavimentação da Via:<br>
+        <input type="radio" name="pavimentacao" value="asfaltica">Asfaltica<br>
+        <input type="radio" name="pavimentacao" value="Prejudicada">Paralelepipedo<br>
+        <input type="radio" name="pavimentacao" value="Ausente">Ausente<br>
+            <input type="radio" name="pavimentacao" value="Não Informado">Não Informado<br>
+
         </fieldset>
         </br>
         <fieldset  id="Informaçoes Específicas"><legend>Informaçoes Específicas</legend>
 
             Resumo:</br>
-            <textarea name="resumo" rows="6" cols="110"value="<?php echo $resumo ?>"></textarea></br>
+            <textarea name="resumo" rows="6" cols="110"><?php echo $row['Resumo'] ?></textarea></br>
 
-        </P>
+        
         <p>
         <label for="endereco" class="required">Digite o Local da ocorrencia:
             <input name="endereco" id="endereco" class="text" type="text">
         <p>
-            <input class="btn btn-large" id="btn-get-coordinates" value="Pegar Coordenadas" type="button">
-        </p>
-
+            <input class="btn btn-default" id="btn-get-coordinates" value="Pegar Coordenadas" type="button">
         </label>
 
             <div class="form-inline">
-                <label for="latitude">Latitude</label><input name="latitude" id="latitude" class="input-xlarge" placeholder="Latitude" type="text">
+                <label for="latitude">Latitude</label><input name="latitude" id="latitude" class="input-xlarge" placeholder="Latitude" type="text" value="<? echo $row[''] ?>">
                 <label for="longitude">Longitude</label><input name="longitude" id="longitude"  class="input-xlarge" placeholder="Longitude" type="text">
 
 
-                </p>
+                
 
                 <p>
                     <span class="negrito">Importante :</span> após surgir o mapa, arraste o apontador até o local exato da Local da ocorrencia. </p>
@@ -134,7 +104,7 @@ $local = $resultado[7];
             <input type="hidden"  name="id" value="<?php echo $id ?>">
             <input type="submit" style="width: 120px; display: block;color: #ffffff;margin: 10px auto;cursor: pointer;background: #069;" name="btem" value="<?php echo $acao ?> Dados">
         </p>
-            </td>
+            
 
 
 
