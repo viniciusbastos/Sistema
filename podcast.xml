@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>Podcasts on Motivation and Education</title>
+    <dateCreated>Sun, 21 Sep 2025 10:47:07 GMT</dateCreated>
+  </head>
+  <body>
+    <outline text="For Parents: Nurturing Motivation at Home">
+      <outline type="rss" text="Janet Lansbury Unruffled" xmlUrl="https://feeds.simplecast.com/pA1_L5sN"/>
+      <outline type="rss" text="Good Inside with Dr. Becky" xmlUrl="https://feeds.megaphone.fm/goodinside"/>
+      <outline type="rss" text="Raising Good Humans" xmlUrl="https://feeds.simplecast.com/2m925R0s"/>
+    </outline>
+    <outline text="For Educators: Applying Principles in the Classroom">
+      <outline type="rss" text="Montessori Education with Jesse McCarthy" xmlUrl="https://montessorieducation.libsyn.com/rss"/>
+      <outline type="rss" text="The Montessori Notebook" xmlUrl="https://themontessorinotebook.libsyn.com/rss"/>
+      <outline type="rss" text="Cult of Pedagogy" xmlUrl="https://feeds.podtrac.com/yK53IXTmy47w"/>
+    </outline>
+    <outline text="For a Deeper Dive into the Science of Motivation">
+      <outline type="rss" text="The Psychology Podcast" xmlUrl="https://scottbarrykaufman.com/feed/podcast/"/>
+      <outline type="rss" text="Hidden Brain" xmlUrl="https://feeds.npr.org/510308/podcast.xml"/>
+    </outline>
+  </body>
+</opml>
